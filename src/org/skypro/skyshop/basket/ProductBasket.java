@@ -45,10 +45,9 @@ public class ProductBasket {
     }
     public boolean productSearch (String productName) {
         for (Product product : products) {
-            if ((product == null) || !Boolean.parseBoolean(product.getProductName())) {
-                continue;
+            if ((product != null) && product.getProductName().equals(productName)) {
+                return  true;
             }
-            return  true;
         }
         return false;
     }

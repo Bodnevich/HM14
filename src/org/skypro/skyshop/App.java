@@ -19,11 +19,9 @@ public class App {
         product.totalCost();
         System.out.println("Стоимость корзины: " + product.totalCost());
 
-        product.productSearch("Хлеб");
-        System.out.println();
+        System.out.println("Есть в корзине Молоко? " + product.productSearch("Молоко"));
 
-        product.productSearch("Сливки");
-        System.out.println();
+        System.out.println("Есть в корзине Сливки? " + product.productSearch("Сливки"));
 
         product.clearBasket();
 
