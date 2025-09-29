@@ -2,8 +2,6 @@ package org.skypro.skyshop.basket;
 
 import org.skypro.skyshop.product.Product;
 
-import static sun.util.locale.LocaleUtils.isEmpty;
-
 public class ProductBasket {
 
     private Product [] products;
@@ -32,16 +30,24 @@ public class ProductBasket {
     }
 
     public void printBasket() {
+        int specialCount = 0;
+        int totalCost = 0;
+
         if (isEmpty()) {
             System.out.println("В козине пусто");
             return;
         }
         for (Product product : products) {
             if (product != null) {
-                System.out.printf("%s: %d%n", product.getProductName(), product.getProductPrice());
+                System.out.println(product.toString());
+                totalCost += product.getProductPrice();
+                if (product.isSpecial()) {
+                    specialCount++;
+                }
             }
         }
         System.out.println("Итого: " + totalCost());
+        System.out.println("Специальных товаров: " +specialCount);
     }
     public boolean productSearch (String productName) {
         for (Product product : products) {
@@ -60,15 +66,6 @@ public class ProductBasket {
     }
 
     private boolean isEmpty() {
-        return size == 0 || allElementsNull();
-    }
-
-    private boolean allElementsNull() {
-        for (Product product : products) {
-            if (product != null) {
-                return false;
-            }
-        }
-        return true;
+        return size == 0;
     }
 }
