@@ -8,7 +8,7 @@ import org.skypro.skyshop.article.Article;
 import java.util.Arrays;
 
 public class App {
-    public static void main (String[] args) throws IllegalAccessException {
+    public static void main (String[] args) {
         ProductBasket product = new ProductBasket();
 
         product.addProduct(new FixPriceProduct("Спагетти"));
