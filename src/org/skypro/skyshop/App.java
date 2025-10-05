@@ -1,12 +1,14 @@
 package org.skypro.skyshop;
 
 import org.skypro.skyshop.basket.ProductBasket;
-import org.skypro.skyshop.product.DiscountedProduct;
-import org.skypro.skyshop.product.FixPriceProduct;
-import org.skypro.skyshop.product.SimpleProduct;
+import org.skypro.skyshop.product.*;
+import org.skypro.skyshop.search.SearchEngine;
+import org.skypro.skyshop.article.Article;
+
+import java.util.Arrays;
 
 public class App {
-    public static void main (String[] args) {
+    public static void main (String[] args) throws IllegalAccessException {
         ProductBasket product = new ProductBasket();
 
         product.addProduct(new FixPriceProduct("Спагетти"));
@@ -32,5 +34,23 @@ public class App {
         product.totalCost();
 
         product.productSearch("Грибы");
+
+        SearchEngine engine = new SearchEngine(10);
+
+        engine.add(new FixPriceProduct("Спагетти"));
+        engine.add(new DiscountedProduct("Сливки", 150, 13));
+        engine.add(new SimpleProduct("Курица", 385));
+        engine.add(new FixPriceProduct("Грибы"));
+        engine.add(new DiscountedProduct("Пармезан", 420, 38));
+        engine.add(new SimpleProduct("Черри", 109));
+
+        engine.add(new Article("История Спагетти", "Из Италии пришло блюдо."));
+        engine.add(new Article("Итальянская кухня", "Рассказ о лучших итальянских блюдах."));
+        engine.add(new Article("Сыр пармезан", "Самый известный сыр Италии."));
+
+        System.out.println("\nПоиск по словам:");
+        System.out.println(Arrays.toString(engine.search("Италия")));
+        System.out.println(Arrays.toString(engine.search("черри")));
+        System.out.println(Arrays.toString(engine.search("сыр")));
     }
 }
