@@ -11,7 +11,7 @@ public class SearchEngine {
     }
 
     public void add(Searchable item) {
-        if (size <= items.length) {
+        if (size >= items.length) {
             throw new IllegalStateException("Array is full.");
         }
             items[size++] = item;
