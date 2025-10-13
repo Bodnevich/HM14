@@ -17,16 +17,35 @@ public class SearchEngine {
             items[size++] = item;
         }
 
-    public Searchable[] search(String query) {
-        Searchable[] results = new Searchable[5];
-        int resultIndex = 0;
+    public Searchable findMostRelevant (String searchQuery) throws BestResultNotFound {
+        int maxOccurrences = -1;
+        Searchable bestMatch = null;
 
         for (Searchable item : items) {
-            if (item != null && item.getSearchTerm().contains(query)) {
-                results[resultIndex++] = item;
-                if (resultIndex >= 5) break;
+            if (item != null) {
+                int occurrences = countSubstrings(item.getSearchTerm(), searchQuery);
+
+                if (occurrences > maxOccurrences) {
+                    maxOccurrences = occurrences;
+                    bestMatch = item;
+                }
             }
         }
-        return results;
+
+        if (bestMatch == null) {
+            throw new BestResultNotFound("Для запроса " + searchQuery + " не найден подходящий объект");
+        }
+
+        return bestMatch;
+    }
+
+    private int countSubstrings (String source, String target) {
+        int count = 0;
+        int index = 0;
+        while ((index = source.indexOf(target, index)) != -1) {
+            count++;
+            index += target.length();
+        }
+        return count;
     }
 }

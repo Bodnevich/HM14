@@ -2,8 +2,10 @@ package org.skypro.skyshop;
 
 import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.product.*;
+import org.skypro.skyshop.search.BestResultNotFound;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.article.Article;
+import org.skypro.skyshop.search.Searchable;
 
 import java.util.Arrays;
 
@@ -48,9 +50,41 @@ public class App {
         engine.add(new Article("Итальянская кухня", "Рассказ о лучших итальянских блюдах."));
         engine.add(new Article("Сыр пармезан", "Самый известный сыр Италии."));
 
-        System.out.println("\nПоиск по словам:");
-        System.out.println(Arrays.toString(engine.search("Италия")));
-        System.out.println(Arrays.toString(engine.search("черри")));
-        System.out.println(Arrays.toString(engine.search("сыр")));
+        try {
+            Product invalidProduct = new SimpleProduct("", 100);
+        } catch (IllegalArgumentException e) {
+            System.err.println(e.getMessage());
+        }
+
+        try {
+            Product zeroPriceProduct = new SimpleProduct("Грибы", 0);
+        } catch (IllegalArgumentException e) {
+            System.err.println(e.getMessage()); //
+        }
+
+        try {
+            Product minusBasePriceProduct = new DiscountedProduct("Сыр", -100, 10);
+        } catch (IllegalArgumentException e) {
+            System.err.println(e.getMessage());
+        }
+
+        try {
+            Product tooHighDiscountProduct = new DiscountedProduct("Хлеб", 100, 110);
+        } catch (IllegalArgumentException e) {
+            System.err.println(e.getMessage());
+        }
+        try {
+            Searchable mostRelevant = engine.findMostRelevant("Италия");
+            System.out.println(mostRelevant.getStringRepresentation());
+        } catch (BestResultNotFound e) {
+            System.err.println(e.getMessage());
+        }
+
+        try {
+            Searchable noResults = engine.findMostRelevant("Французские вина"); // Запрос, которого нет
+            System.out.println(noResults.getStringRepresentation());
+        } catch (BestResultNotFound e) {
+            System.err.println(e.getMessage());
+        }
     }
 }
