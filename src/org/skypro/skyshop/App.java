@@ -74,17 +74,17 @@ public class App {
             System.err.println(e.getMessage());
         }
         try {
-            Searchable mostRelevant = engine.findMostRelevant("Из Италии пришло блюдо");
-            System.out.println(mostRelevant.getStringRepresentation());
+            Searchable mostRelevant = engine.findMostRelevant("Из Италии");
+            System.out.println("Лучший вариант: " + mostRelevant.getStringRepresentation());
         } catch (BestResultNotFound e) {
-            System.err.println(e.getMessage());
+            System.err.println("Ошибка поиска: " + e.getMessage());
         }
 
         try {
             Searchable noResults = engine.findMostRelevant("Мексиканский сыр");
-            System.out.println(noResults.getStringRepresentation());
+            System.out.println("Результат: " + noResults.getStringRepresentation());
         } catch (BestResultNotFound e) {
-            System.err.println(e.getMessage());
+            System.err.println("Ошибка поиска: " + e.getMessage());
         }
     }
 }

@@ -34,7 +34,7 @@ public class ProductBasket {
         int totalCost = 0;
 
         if (isEmpty()) {
-            System.out.println("В козине пусто");
+            System.out.println("В корзине пусто");
             return;
         }
         for (Product product : products) {
