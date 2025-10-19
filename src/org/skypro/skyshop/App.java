@@ -67,7 +67,7 @@ public class App {
         engine.add(new Article("Сыр пармезан", "Самый известный сыр Италии."));
 
         List<Searchable> results = engine.findAllMatching("Пармезан");
-        System.out.println("\nРезультаты поиска по запросу \"Италия\":");
+        System.out.println("\nРезультаты поиска по запросу: ");
         for (Searchable result : results) {
             System.out.println(result.getStringRepresentation());
         }
