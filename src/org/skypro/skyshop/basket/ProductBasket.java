@@ -17,34 +17,33 @@ public class ProductBasket {
         }
 
     public int totalCost () {
-        int totalCost = 0;
-        for (List<Product> sameNamedProducts : products.values()) {
-            for (Product product : sameNamedProducts) {
-                totalCost += product.getProductPrice();
-            }
-        }
-            return totalCost;
+        return products.values().stream()
+                .flatMap(List::stream)
+                .mapToInt(Product::getProductPrice)
+                .sum();
     }
     void printBasket() {
-        int specialCount = 0;
-        int totalCostInPrintMethod = 0;
 
         if (products.isEmpty()) {
             System.out.println("В корзине пусто");
             return;
         }
-        for (List<Product> sameNamedProducts: products.values()) {
-            for (Product product : sameNamedProducts) {
-                System.out.println(product.toString());
-                totalCostInPrintMethod += product.getProductPrice();
-                if (product.isSpecial()) {
-                    specialCount++;
-                }
-            }
-        }
+
+        products.values().stream()
+                .flatMap(List::stream)
+                .forEach(System.out::println);
+
         System.out.println("Итого: " + totalCost());
-        System.out.println("Специальных товаров: " +specialCount);
+        System.out.println("Специальных товаров: " + getSpecialCount());
     }
+
+    private long getSpecialCount() {
+        return products.values().stream()
+                .flatMap(List::stream)
+                .filter(Product::isSpecial)
+                .count();
+    }
+
     public boolean productSearch(String productName) {
        return products.containsKey(productName);
     }
